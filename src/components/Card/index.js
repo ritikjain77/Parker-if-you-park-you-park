@@ -1,66 +1,54 @@
 import './styles.css';
-
-//----------
-//Components
-//----------
-
 function Card(props) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    let vehicleNumber = event.target.elements[0].value;
+    let ownerName = event.target.elements[1].value;
+    let vehicleType = event.target.elements[2].value;
+    const dataObj = {
+      vehicleNumber: vehicleNumber,
+      ownerName: ownerName,
+      vehicleType: vehicleType
+    };
+    console.log("------------------");
+    fetch('http://localhost:8080', {
+      method: 'POST',
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(dataObj),
+      mode: "no-cors"
+    }).then(() => {
+      console.log("Ho gaya bhaiya");
+    })
+      .catch(Error => console.log(Error));
+  }
+  return (
+    <div className="card">
 
-      const handleSubmit = () =>{
-        console.log("mayank madarchod");
-        // event.preventDefault();
-        // console.log(event.target.elements.fname.value);
-        // console.log(event.target.elements.Oname.value);
-        // console.log(event.target.elements.Vname.value);
-      };
-      return(
-          <div className="card">
-            
+      <h1>Vehicle Entry</h1>
+      <div>
+        <h4>vehicle Number:</h4>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input type="text" id="fname" name="fname" placeholder='Enter Vehicle Number' />
+          <br />
+        </div>
+        <div>
+          <h4>Owner Name:</h4>
+          <input type="text" id="fname" name="Oname" placeholder='Enter Owner Name' />
+          <br />
+        </div>
+        <div>
+          <h4>Vehicle Type:</h4>
+          <input type="text" id="fname" name="Vname" placeholder='Enter Vehicle Type' />
+          <br />
+        </div>
 
-            <h1>Vehicle Entry</h1>
-            <div>
-            <h4>vehicle Number:</h4>
-            <input type="text" id="fname" name="fname" placeholder='Enter Vehicle Number'/>
-            <br/>
-            </div>
-            <div>
-            <h4>Owner Name:</h4>
-            <input type="text" id="fname" name="Oname" placeholder='Enter Owner Name'/>
-            <br/>
-            </div>
-            <div>
-            <h4>Vehicle Type:</h4>
-            <input type="text" id="fname" name="Vname" placeholder='Enter Vehicle Type'/>
-            <br/>
-            </div>
-            
-           <button onClick={handleSubmit()}>Submit</button>
+        <button>Submit</button>
+      </form>
 
-           
-          </div>
-      );
-    }
+    </div>
+  );
+}
 
-    export default Card;
-  
-//   class App extends React.Component {
-//     render() {
-//       return (
-//         <>
-//         //  <div class="header">
-//         //    <h1>React Card Component</h1>
-//         //    <h3>A simple and responsive card component in React with clean hover effects. Copy and customise.</h3>
-//         //  </div>
-        
-//          <div className='cards'>
-//            <Card
-//             img='https://picsum.photos/id/54/400/300'
-//             title='What I learned from my visit to The Upside Down'
-//             author='Nancy Wheeler' />
-//         </div>  
-//         </>
-//       )
-//     }
-//   }
-  
-  
+export default Card;
